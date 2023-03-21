@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Match {
+  idMatch            String   @id @default(uuid())
+  availableVacancies Int
+  createdFor         DateTime
+  CEP                String
+  address            String
+  neighborhood       String
+  city               String
+  UF                 String
+  addressNumber      String
+
+  idSports  String
+  onwerUser String
+
+  sports Sports @relation(fields: [idSports], references: [idSports])
+  User   User?  @relation(fields: [onwerUser], references: [idUser])
+
+  participants Participants[]
+  Game         Game[]
+}
+
+model Sports {
+  idSports  String @id @default(uuid())
+  sportName String
+
+  matchs Match[]
+}
+
+model Game {
+  idGame         String @id @default(uuid())
+  idParticipants String
+  idMatch        String
+
+  Participants Participants @relation(fields: [idParticipants], references: [idParticipants])
+  Match        Match        @relation(fields: [idMatch], references: [idMatch])
+
+  @@unique([idParticipants, idMatch])
+}
+
+model Participants {
+  idParticipants String @id @default(uuid())
+  idUser         String
+  idMatch        String
+
+  user  User   @relation(fields: [idUser], references: [idUser])
+  Match Match  @relation(fields: [idMatch], references: [idMatch])
+  game  Game[]
+
+  @@unique([idUser, idMatch])
+}
+
+model User {
+  idUser    String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  // googleId  String?  @unique
+  avatarUrl String?
+  createdAt DateTime @default(now())
+
+  Match        Match[]
+  Participants Participants[]
+}
