@@ -1,7 +1,7 @@
 import { Button as ButtonNativeBase, IButtonProps, Text } from 'native-base';
 
 interface Props extends IButtonProps {
-  title: string;
+  title?: string;
 }
 
 export function Button({ title, ...rest }: Props) {

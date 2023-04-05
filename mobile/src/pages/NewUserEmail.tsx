@@ -3,10 +3,12 @@ import { Image, StyleSheet} from 'react-native'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { LinearGradient } from 'expo-linear-gradient';
 
+import { LinearGradient } from 'expo-linear-gradient';
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
+import { Header } from '../components/Header';
+import { useNavigation } from '@react-navigation/native';
 
 type FormDataProps = {
     name: string;
@@ -26,21 +28,31 @@ const signUpSchema = yup.object({
 })
 
 export function NewUserEmail() {
+
+    const {navigate} = useNavigation()
+
     const { control, handleSubmit, formState: {errors} } = useForm<FormDataProps>({
         resolver : yupResolver(signUpSchema)
     });
 
-    function handleSignUp(data: FormDataProps) {
-        console.log(data);
+    function handleGames(){
+        navigate('home')
     }
 
+    function handleSignUp(data: FormDataProps) {
+        console.log(data)
+        handleGames()
+    }
+
+    
+    
     return (
             <LinearGradient
-             colors={[ '#3b5998', '#808080']}
+             colors={[ '#3F5999','#3b5545', '#808080']}
              style={{flex: 1}}
             >
+            <Header title="CRIA SUA CONTA" showBackButton />
             <ScrollView p={7}>
-            <Text color='white'fontSize={35} mb={4} mt={10} alignSelf='center' fontWeight='bold'>Cria sua conta</Text>
             <VStack>
                 <Controller
                     control={control}
@@ -93,7 +105,14 @@ export function NewUserEmail() {
                     )}
                 />
                 </VStack>
-            <Button title='CADASTRAR' bg='green.500' _pressed={{bgColor: "green.700"}} onPress={handleSubmit(handleSignUp)}/>
+                <Button 
+                title='CADASTRAR' 
+                bg='green.500' 
+                _pressed={{bgColor: "green.700"}} 
+                onPress={handleGames
+                    // handleSubmit(handleSignUp)
+                    }/>
+
                 <Image
                 source={require('../assets/logo.png')}
                 style={{ width: 250,height: 250, marginBottom: 100, alignSelf: 'center'}}

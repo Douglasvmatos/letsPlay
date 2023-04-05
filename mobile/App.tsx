@@ -1,13 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { NativeBaseProvider } from 'native-base';
 
-import { NewUserEmail } from './src/pages/NewUserEmail';
+import { Routes } from './src/routes';
 
 export default function App() {
+
   return (
     <NativeBaseProvider>
         <StatusBar style="auto" />
-         <NewUserEmail />      
+         <Routes />      
     </NativeBaseProvider>
   );
 }

@@ -3,8 +3,12 @@ import { Image, StyleSheet } from 'react-native'
 import { Fontisto, AntDesign } from '@expo/vector-icons'
 
 import { Button } from '../components/Button';
+import { useNavigation } from '@react-navigation/native';
 
 export function SignIn() {
+
+    const {navigate} = useNavigation()
+
     return (
         <Center flex={1} bg="black" p={7}>
             <Image
@@ -22,8 +26,10 @@ export function SignIn() {
             leftIcon={<Icon as={AntDesign} name='plus' color="black" size="md" />}
             mt={6}
             color="black"
+            bgColor='gray.300'
+            _pressed={{bgColor: 'gray.400'}}
             _loading={{ _spinner: {color: 'white'} }}
-            // onPress={() => navigate('signUp')}
+            onPress={() => navigate('newUserEmail')}
             />
             
             <Text color="white" textAlign="center" mt={4}>
